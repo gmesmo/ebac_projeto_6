@@ -61,7 +61,9 @@ export const DishesCard = ({ dish }: { dish: DishesType }) => {
         <CardImage src={image} alt={name} />
       </CardHeader>
       <CardBody dish>
-        <CardTitle dish>{name}</CardTitle>
+        <CardTitle dish>
+          <h3>{name}</h3>
+        </CardTitle>
 
         <Description dish>{description}</Description>
 

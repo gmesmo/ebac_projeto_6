@@ -1,20 +1,15 @@
 import styled from 'styled-components'
-import { cores } from 'styles'
+import { Container, cores } from 'styles'
 
 type Props = {
   image: string
 }
 
 export const Banner = styled.div<Props>`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-
   position: relative;
   width: 100%;
-  height: 280px;
+
   overflow: hidden;
-  padding: 25px 170px 32px 170px;
   color: ${cores.branco};
 
   &:before {
@@ -31,6 +26,16 @@ export const Banner = styled.div<Props>`
     background-repeat: no-repeat;
 
     filter: brightness(50%);
+  }
+
+  ${Container} {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 280px;
+
+    margin-top: 25px;
+    margin-bottom: 32px;
   }
 `
 

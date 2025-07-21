@@ -49,13 +49,11 @@ export const CardTitle = styled.div<StoreCardProps>`
   justify-content: space-between;
   align-items: center;
 
-  font-size: ${({ dish }) => (dish ? '16px' : '18px')};
-  font-weight: 700;
-
   margin-bottom: ${({ dish }) => (dish ? '8px' : '16px')};
 
-  h2 {
-    font-size: 18px;
+  h3 {
+    font-size: ${({ dish }) => (dish ? '16px' : '18px')};
+    font-weight: ${({ dish }) => (dish ? '900' : '700')};
   }
 
   span {

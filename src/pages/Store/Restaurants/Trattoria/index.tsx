@@ -17,8 +17,10 @@ const Trattoria = () => {
     return (
       <>
         <Banner image={TrattoriaImage}>
-          <Cuisine>{Trattoria.cuisine}</Cuisine>
-          <Name>{Trattoria.name}</Name>
+          <Container>
+            <Cuisine>{Trattoria.cuisine}</Cuisine>
+            <Name>{Trattoria.name}</Name>
+          </Container>
         </Banner>
         <Container dish>
           {Trattoria.dishes?.map((dish) => (

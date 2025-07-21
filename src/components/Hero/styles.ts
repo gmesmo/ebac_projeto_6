@@ -28,7 +28,7 @@ export const HeroContainer = styled.div<LocationType>`
 
 export const Text = styled.p`
   color: ${cores.laranja};
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 900;
   text-align: center;
 
