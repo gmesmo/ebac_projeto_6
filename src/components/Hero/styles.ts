@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 import { LocationType } from '.'
-import { cores } from '../../styles'
+import { Container, cores } from '../../styles'
+import { Link } from 'react-router-dom'
 
 type Props = {
-  text?: string
+  text?: 'left' | 'right'
 }
 
 export const HeroContainer = styled.div<LocationType>`
-  display: flex;
   flex-direction: ${({ pathname }) => (pathname === '/' ? 'column' : 'row')};
   justify-content: ${({ pathname }) =>
     pathname === '/' ? 'center' : 'space-between'};
@@ -18,7 +18,22 @@ export const HeroContainer = styled.div<LocationType>`
   background-repeat: no-repeat;
   height: ${({ pathname }) => (pathname === '/' ? '384px' : '186px')};
   width: 100%;
-  padding: 40px 176px;
+  padding: 40px 0;
+
+  ${Container} {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 0;
+    margin-bottom: 0;
+
+    height: 100%;
+
+    a {
+      align-self: center;
+    }
+  }
 
   img {
     display: inline-block;
@@ -39,6 +54,7 @@ export const RestaurantInfo = styled.div<Props>`
   color: ${cores.laranja};
   font-size: 18px;
   font-weight: 900;
-  text-align: ${({ text }) => (text === 'center' ? 'center' : 'right')};
-  width: 260px;
+  text-align: ${({ text }) => (text === 'left' ? 'left' : 'right')};
+
+  width: 200px;
 `

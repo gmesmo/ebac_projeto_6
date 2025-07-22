@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { HeroContainer, RestaurantInfo, Text } from './styles'
+import { Container } from 'styles'
 
 interface Props {
   logo: string
@@ -29,11 +30,13 @@ const Hero = ({ logo }: Props) => {
 
   return (
     <HeroContainer pathname={location.pathname}>
-      <RestaurantInfo text='center'>Restaurante</RestaurantInfo>
-      <Link to='/'>
-        <img src={logo} alt='Logo EFOOD' />
-      </Link>
-      <RestaurantInfo>0 produto(s) no carrinho</RestaurantInfo>
+      <Container>
+        <RestaurantInfo text='left'>Restaurante</RestaurantInfo>
+        <Link to='/'>
+          <img src={logo} alt='Logo EFOOD' />
+        </Link>
+        <RestaurantInfo>0 produto(s) no carrinho</RestaurantInfo>
+      </Container>
     </HeroContainer>
   )
 }
