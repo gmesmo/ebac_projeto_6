@@ -1,22 +1,22 @@
 import styled from 'styled-components'
-import { LocationType } from '.'
+import { isHomeType } from '.'
 import { Container, cores } from '../../styles'
-import { Link } from 'react-router-dom'
 
 type Props = {
   text?: 'left' | 'right'
 }
 
-export const HeroContainer = styled.div<LocationType>`
-  flex-direction: ${({ pathname }) => (pathname === '/' ? 'column' : 'row')};
-  justify-content: ${({ pathname }) =>
-    pathname === '/' ? 'center' : 'space-between'};
+export const HeroContainer = styled.div<isHomeType>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   align-items: center;
 
   background-image: url(${require('../../assets/images/fundo.png')});
   background-size: cover;
   background-repeat: no-repeat;
-  height: ${({ pathname }) => (pathname === '/' ? '384px' : '186px')};
+  height: ${({ isHome }) => (isHome ? '384px' : '186px')};
   width: 100%;
   padding: 40px 0;
 
@@ -24,6 +24,9 @@ export const HeroContainer = styled.div<LocationType>`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    flex-direction: ${({ isHome }) => (isHome ? 'column' : 'row')};
+    justify-content: ${({ isHome }) => (isHome ? 'center' : 'space-between')};
 
     margin-top: 0;
     margin-bottom: 0;

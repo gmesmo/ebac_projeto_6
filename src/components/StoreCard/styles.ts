@@ -12,6 +12,8 @@ export const CardContainer = styled.div<StoreCardProps>`
 
   background-color: ${({ dish }) => (dish ? cores.laranja : cores.branco)};
   color: ${({ dish }) => (dish ? cores.offWhite : cores.laranja)};
+
+  border-radius: 8px;
 `
 
 export const CardHeader = styled.div<StoreCardProps>`
@@ -22,6 +24,8 @@ export const CardHeader = styled.div<StoreCardProps>`
   img {
     width: 100%;
     ${({ dish }) => dish && 'height: 168px;'}
+
+    ${({ dish }) => dish && 'border-radius: 8px;'}
   }
 `
 
@@ -68,4 +72,63 @@ export const Description = styled.div<StoreCardProps>`
   line-height: 22px;
 
   margin-bottom: ${({ dish }) => (dish ? '8px' : '16px')};
+`
+
+export const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1;
+`
+
+export const DetailsCard = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+
+  width: 1024px;
+  height: 344px;
+  padding: 32px;
+
+  background-color: ${cores.laranja};
+  color: ${cores.branco};
+
+  display: flex;
+
+  .close {
+    position: absolute;
+    top: 8px;
+    right: -16px;
+    cursor: pointer;
+
+    width: 16px;
+    height: 16px;
+  }
+
+  img {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+
+    margin-right: 24px;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 900;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400;
+
+    margin: 16px 0;
+  }
 `

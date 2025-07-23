@@ -5,46 +5,52 @@ import {
   Description,
   CardHeader,
   CardBody,
-  CardDestaque
+  CardDestaque,
+  Overlay,
+  DetailsCard
 } from './styles'
 
 import Button, { CartButton } from '../Button'
-import Restaurant, { DishesType } from 'models/Restaurant'
 
 import estrela from '../../assets/images/estrela.png'
+import { CardapioType, LojasType } from 'services/api'
+import { useState } from 'react'
+import { createPortal } from 'react-dom'
+
+import close from '../../assets/images/close.png'
 
 export type Props = {
   size?: 'normal' | 'big'
 }
 
-const StoreCard = ({ restaurante }: { restaurante: Restaurant }) => {
-  const { name, image, destaque, cuisine, description, rating } = restaurante
+export const formatarDescricao = (descricao: string) => {
+  return descricao.slice(0, 160) + '...'
+}
+
+const StoreCard = ({ restaurante }: { restaurante: LojasType }) => {
+  const { titulo, capa, destacado, tipo, descricao, avaliacao } = restaurante
 
   return (
     <CardContainer>
       <CardHeader>
-        <CardImage src={image} alt={name} />
+        <CardImage src={capa} alt={titulo} />
         <CardDestaque>
-          {destaque && <Button>Destaque da semana</Button>}
-          <Button>{cuisine}</Button>
+          {destacado && <Button>Destaque da semana</Button>}
+          <Button>{tipo}</Button>
         </CardDestaque>
       </CardHeader>
 
       <CardBody>
         <CardTitle>
-          <h3>{name}</h3>
+          <h3>{titulo}</h3>
 
           <span>
-            {rating}
-            <img src={estrela} alt={`${rating} estrelas`} />
+            {avaliacao}
+            <img src={estrela} alt={`${avaliacao} estrelas`} />
           </span>
         </CardTitle>
-        <Description>
-          {description.map((item) => (
-            <p key={item}>{item}</p>
-          ))}
-        </Description>
-        <Button to={`${restaurante.link}?id=${restaurante.id}`} size='big'>
+        <Description>{formatarDescricao(descricao)}</Description>
+        <Button to={`/Store/${restaurante.id}`} size='big'>
           Saiba Mais
         </Button>
       </CardBody>
@@ -52,23 +58,64 @@ const StoreCard = ({ restaurante }: { restaurante: Restaurant }) => {
   )
 }
 
-export const DishesCard = ({ dish }: { dish: DishesType }) => {
-  const { name, description, image } = dish
+const formataPreco = (preco: number) => {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(preco)
+}
+
+export const DishesCard = ({ dish }: { dish: CardapioType }) => {
+  const { foto, nome, descricao, porcao, preco } = dish
+
+  const [overlayOn, setOverlayOn] = useState(false)
 
   return (
     <CardContainer dish>
       <CardHeader dish>
-        <CardImage src={image} alt={name} />
+        <CardImage src={foto} alt={nome} />
       </CardHeader>
       <CardBody dish>
         <CardTitle dish>
-          <h3>{name}</h3>
+          <h3>{nome}</h3>
         </CardTitle>
 
-        <Description dish>{description}</Description>
+        <Description dish>{formatarDescricao(descricao)}</Description>
 
-        <CartButton>Adicionar ao carrinho</CartButton>
+        <CartButton onClick={() => setOverlayOn(true)}>
+          Mais detalhes
+        </CartButton>
       </CardBody>
+      {overlayOn &&
+        createPortal(
+          <>
+            <Overlay onClick={() => setOverlayOn(false)} />
+            <DetailsCard>
+              <img src={foto} alt={nome} />
+
+              <div>
+                <h3>{nome}</h3>
+                <p>
+                  {descricao}
+                  <br />
+                  <br />
+                  Serve: de {porcao}
+                </p>
+                <CartButton variant='secondary'>
+                  Adicionar ao carrinho - {formataPreco(preco)}
+                </CartButton>
+              </div>
+              <img
+                onClick={() => setOverlayOn(false)}
+                src={close}
+                alt='Fechar'
+                className='close'
+              />
+            </DetailsCard>
+          </>,
+
+          document.body
+        )}
     </CardContainer>
   )
 }

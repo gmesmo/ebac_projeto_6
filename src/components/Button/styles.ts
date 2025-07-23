@@ -3,6 +3,7 @@ import { Props as StoreCardProps } from '../StoreCard'
 
 import styled from 'styled-components'
 import { cores } from '../../styles'
+import { ButtonProps } from '.'
 
 export const ButtonLink = styled(Link)<StoreCardProps>`
   font-size: ${({ size }) => (size === 'big' ? '14px' : '12px')};
@@ -29,11 +30,14 @@ export const StyledButton = styled.a<StoreCardProps>`
   text-decoration: none;
 `
 
-export const BuyButton = styled.a`
-  display: inline-block;
+export const BuyButton = styled.a<
+  Omit<ButtonProps, 'children' | 'to' | 'onClick' | 'size'>
+>`
+  display: ${({ variant }) =>
+    variant === 'primary' ? 'inline-block' : 'inline'};
 
   width: 100%;
-  padding: 4px;
+  padding: ${({ variant }) => (variant === 'primary' ? '4px' : '4px 6px')};
   text-align: center;
 
   font-size: 14px;

@@ -6,36 +6,57 @@ interface Props {
   logo: string
 }
 
-export type LocationType = {
+type LocationType = {
   pathname: string
+}
+
+export type isHomeType = {
+  isHome?: boolean
 }
 
 const Hero = ({ logo }: Props) => {
   const location: LocationType = useLocation()
 
-  if (location.pathname === '/') {
-    return (
-      <HeroContainer pathname={location.pathname}>
-        <Link to='/'>
-          <img src={logo} alt='Logo EFOOD' />
-        </Link>
-        <Text>
-          Viva experiências gastronômicas
-          <br />
-          no conforto da sua casa
-        </Text>
-      </HeroContainer>
-    )
-  }
+  const isHome = location.pathname === '/'
+
+  // if (isHome) {
+  //   return (
+  //     <HeroContainer isHome>
+  //       <Link to='/'>
+  //         <img src={logo} alt='Logo EFOOD' />
+  //       </Link>
+  //       <Text>
+  //         Viva experiências gastronômicas
+  //         <br />
+  //         no conforto da sua casa
+  //       </Text>
+  //     </HeroContainer>
+  //   )
+  // }
 
   return (
-    <HeroContainer pathname={location.pathname}>
+    <HeroContainer isHome={isHome}>
       <Container>
-        <RestaurantInfo text='left'>Restaurante</RestaurantInfo>
-        <Link to='/'>
-          <img src={logo} alt='Logo EFOOD' />
-        </Link>
-        <RestaurantInfo>0 produto(s) no carrinho</RestaurantInfo>
+        {isHome ? (
+          <>
+            <Link to='/'>
+              <img src={logo} alt='Logo EFOOD' />
+            </Link>
+            <Text>
+              Viva experiências gastronômicas
+              <br />
+              no conforto da sua casa
+            </Text>
+          </>
+        ) : (
+          <>
+            <RestaurantInfo text='left'>Restaurante</RestaurantInfo>
+            <Link to='/'>
+              <img src={logo} alt='Logo EFOOD' />
+            </Link>
+            <RestaurantInfo>0 produto(s) no carrinho</RestaurantInfo>
+          </>
+        )}
       </Container>
     </HeroContainer>
   )

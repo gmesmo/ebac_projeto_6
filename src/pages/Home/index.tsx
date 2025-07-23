@@ -1,8 +1,10 @@
+import { LojasApi } from 'services/api'
 import StoreCard from '../../components/StoreCard'
 import { Container } from '../../styles'
-import { restaurantes } from 'assets/restaurant-db'
 
 const Home = () => {
+  const restaurantes = LojasApi()
+
   return (
     <Container>
       {restaurantes.map((restaurante) => (

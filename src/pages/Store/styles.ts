@@ -42,6 +42,8 @@ export const Banner = styled.div<Props>`
 export const Cuisine = styled.p`
   font-size: 32px;
   font-weight: 100;
+
+  text-transform: capitalize;
 `
 
 export const Name = styled.h2`
