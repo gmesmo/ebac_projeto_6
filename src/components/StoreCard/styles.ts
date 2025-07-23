@@ -71,7 +71,7 @@ export const Description = styled.div<StoreCardProps>`
   font-size: 14px;
   line-height: 22px;
 
-  margin-bottom: ${({ dish }) => (dish ? '8px' : '16px')};
+  margin-bottom: ${({ dish }) => (dish ? '6px' : '16px')};
 `
 
 export const Overlay = styled.div`
