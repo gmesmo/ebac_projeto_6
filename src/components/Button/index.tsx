@@ -1,7 +1,7 @@
 import { ButtonLink, BuyButton, StyledButton } from './styles'
 
 export type ButtonProps = {
-  children: React.ReactNode
+  children?: React.ReactNode
   to?: string
   size?: 'normal' | 'big'
   onClick?: () => void

@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from 'react-redux'
+
 import {
   CardContainer,
   CardTitle,
@@ -5,19 +7,19 @@ import {
   Description,
   CardHeader,
   CardBody,
-  CardDestaque,
-  Overlay,
-  DetailsCard
+  CardDestaque
 } from './styles'
 
 import Button, { CartButton } from '../Button'
 
 import estrela from '../../assets/images/estrela.png'
-import { CardapioType, LojasType } from 'services/api'
-import { useState } from 'react'
+import { DishType, LojasType } from 'services/api'
+import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import close from '../../assets/images/close.png'
+import ProductDetails from 'modals/ProductDetails'
+import { openDetails, closeDetails } from 'store/reducers/cart'
+import { RootReducer } from 'store'
 
 export type Props = {
   size?: 'normal' | 'big'
@@ -25,6 +27,13 @@ export type Props = {
 
 export const formatarDescricao = (descricao: string) => {
   return descricao.slice(0, 160) + '...'
+}
+
+export const formataPreco = (preco: number) => {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(preco)
 }
 
 const StoreCard = ({ restaurante }: { restaurante: LojasType }) => {
@@ -58,62 +67,48 @@ const StoreCard = ({ restaurante }: { restaurante: LojasType }) => {
   )
 }
 
-const formataPreco = (preco: number) => {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  }).format(preco)
-}
+export const DishesCard = ({ dish }: { dish: DishType }) => {
+  const dispatch = useDispatch()
+  const { foto, nome, descricao } = dish
 
-export const DishesCard = ({ dish }: { dish: CardapioType }) => {
-  const { foto, nome, descricao, porcao, preco } = dish
+  const { detailsOpen } = useSelector((state: RootReducer) => state.cart)
+  const [showProductDetails, setShowProductDetails] = useState(false)
 
-  const [overlayOn, setOverlayOn] = useState(false)
+  const handleShowProductDetails = (value: boolean) => {
+    if (value) {
+      setShowProductDetails(true)
+      dispatch(openDetails())
+    } else {
+      setShowProductDetails(false)
+    }
+  }
+
+  useEffect(() => {
+    if (!detailsOpen) {
+      setShowProductDetails(false)
+    }
+  }, [detailsOpen])
 
   return (
-    <CardContainer dish>
-      <CardHeader dish>
+    <CardContainer dish={true}>
+      <CardHeader dish={true}>
         <CardImage src={foto} alt={nome} />
       </CardHeader>
-      <CardBody dish>
-        <CardTitle dish>
+      <CardBody dish={true}>
+        <CardTitle dish={true}>
           <h3>{nome}</h3>
         </CardTitle>
 
-        <Description dish>{formatarDescricao(descricao)}</Description>
+        <Description dish={true}>{formatarDescricao(descricao)}</Description>
 
-        <CartButton onClick={() => setOverlayOn(true)}>
+        <CartButton onClick={() => handleShowProductDetails(true)}>
           Mais detalhes
         </CartButton>
       </CardBody>
-      {overlayOn &&
+      {showProductDetails &&
+        detailsOpen &&
         createPortal(
-          <>
-            <Overlay onClick={() => setOverlayOn(false)} />
-            <DetailsCard>
-              <img src={foto} alt={nome} />
-
-              <div>
-                <h3>{nome}</h3>
-                <p>
-                  {descricao}
-                  <br />
-                  <br />
-                  Serve: de {porcao}
-                </p>
-                <CartButton variant='secondary'>
-                  Adicionar ao carrinho - {formataPreco(preco)}
-                </CartButton>
-              </div>
-              <img
-                onClick={() => setOverlayOn(false)}
-                src={close}
-                alt='Fechar'
-                className='close'
-              />
-            </DetailsCard>
-          </>,
-
+          <ProductDetails dish={dish} onClose={handleShowProductDetails} />,
           document.body
         )}
     </CardContainer>

@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom'
+
 import { Disclaimer, FooterContainer, Social } from './styles'
 
 import facebook from '../../assets/images/social/facebook.png'
 import instagram from '../../assets/images/social/instagram.png'
 import twitter from '../../assets/images/social/twitter.png'
-import { Link } from 'react-router-dom'
 
 interface Props {
   logo: string

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-export type CardapioType = {
+export type DishType = {
   foto: string
   preco: number
   id: number
@@ -18,17 +18,22 @@ export type LojasType = {
   descricao: string
   capa: string
   banner: string
-  cardapio: CardapioType[]
+  cardapio: DishType[]
 }
 
-export const LojasApi = () => {
-  const [lojas, setLojas] = useState<LojasType[]>([])
+const api = createApi({
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://fake-api-tau.vercel.app/api/efood/restaurantes'
+  }),
+  endpoints: (builder) => ({
+    getLojas: builder.query<LojasType[], void>({
+      query: () => ''
+    }),
+    getLoja: builder.query<LojasType, string>({
+      query: (id) => `/${id}`
+    })
+  })
+})
 
-  useEffect(() => {
-    fetch('https://fake-api-tau.vercel.app/api/efood/restaurantes')
-      .then((res) => res.json())
-      .then((res) => setLojas(res))
-  }, [])
-
-  return lojas
-}
+export const { useGetLojasQuery, useGetLojaQuery } = api
+export default api

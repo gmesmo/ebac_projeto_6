@@ -1,9 +1,13 @@
-import { LojasApi } from 'services/api'
+import { useGetLojasQuery } from 'services/api'
 import StoreCard from '../../components/StoreCard'
 import { Container } from '../../styles'
 
 const Home = () => {
-  const restaurantes = LojasApi()
+  const { data: restaurantes } = useGetLojasQuery()
+
+  if (!restaurantes) {
+    return <h3>Carregando...</h3>
+  }
 
   return (
     <Container>
