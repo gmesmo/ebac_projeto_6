@@ -29,7 +29,7 @@ const Cart = () => {
                 <img src={item.foto} alt={item.nome} />
                 <div>
                   <h3>{item.nome}</h3>
-                  <p>Preço: R$ {formataPreco(item.preco)}</p>
+                  <p>Preço: {formataPreco(item.preco)}</p>
                 </div>
                 <img
                   className='remove'
@@ -42,7 +42,7 @@ const Cart = () => {
           </SelectedItems>
           <div className='total'>
             <p>Total:</p>
-            <span>R$ {formataPreco(getTotalValue())}</span>
+            <span>{formataPreco(getTotalValue())}</span>
           </div>
           <CartButton>Continuar com a entrega</CartButton>
         </Sidebar>

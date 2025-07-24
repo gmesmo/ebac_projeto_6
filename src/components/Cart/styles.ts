@@ -19,7 +19,7 @@ export const Sidebar = styled.aside`
     justify-content: space-between;
     margin-bottom: 16px;
 
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
   }
 
@@ -58,11 +58,6 @@ export const Item = styled.div`
     font-size: 18px;
     font-weight: 900;
     margin-bottom: 16px;
-  }
-
-  p {
-    font-size: 14px;
-    font-weight: 400;
   }
 
   .remove {
